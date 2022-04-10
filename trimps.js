@@ -6,7 +6,7 @@ var moduleStorage = true;
 var moduleHouse = true;
 
 // STORAGE SETTINGS
-var buyStorageThreshold = 0.5;
+var buyStorageThreshold = 0.8;
 
 // JOB SETTINGS
 var lumberRatio = 1; // for 1 farmer
@@ -26,7 +26,8 @@ var runInterval = 1000;      //How often to loop through logic
 var ToMactivated = false;
 var ToMinterval;
 
-var foodOwned, foodMax, woodOwned, woodMax, metalOwned, metalMax;
+var foodBar, woodBar, metalBar;
+var hut, house, mansion, hotel;
 var notfiringMode, unumployed, farmer, lumber, miner, scientist;
 var equipment, upgrade;
 var upgradeList = ['Miners', 'Scientists', 'Coordination', 'Speedminer', 'Speedlumber', 'Speedfarming', 'Speedscience', 'Speedexplorer', 'Megaminer', 'Megalumber', 'Megafarming', 'Megascience', 'Efficiency', 'TrainTacular', 'Trainers', 'Explorers', 'Blockmaster', 'Battle', 'Bloodlust', 'Bounty', 'Egg', 'Anger', 'Formations', 'Dominance', 'Barrier', 'UberHut', 'UberHouse', 'UberMansion', 'UberHotel', 'UberResort', 'Trapstorm', 'Gigastation', 'Potency', 'Magmamancers'];
@@ -63,7 +64,7 @@ function activateToM() {
 
 function mainLoop() {
     
-    // Storages
+    // STORAGES
     foodBar = parseFloat(document.getElementById('foodBar').style.width) / 100;
     woodBar = parseFloat(document.getElementById('woodBar').style.width) / 100;
     metalBar = parseFloat(document.getElementById('metalBar').style.width) / 100;
@@ -80,7 +81,26 @@ function mainLoop() {
         buyBuilding('Forge', true, true);
     }
 
-    // Jobs
+    // HOUSES
+    hut = parseInt(document.getElementById('HutOwned').innerHTML);
+    house = parseInt(document.getElementById('HouseOwned').innerHTML);
+    mansion = parseInt(document.getElementById('MansionOwned').innerHTML);
+    hotel = parseInt(document.getElementById('HotelOwned').innerHTML);
+
+    if (!!document.getElementById("Hotel")){
+        continue;
+    }
+    else if (!!document.getElementById("Mansion")){
+        continue;
+    }
+    else if (!!document.getElementById("House")){
+        continue;
+    }
+    else {
+        continue;
+    }
+
+    // JOBS
     notfiringMode = document.getElementById("fireBtn").classList.contains("fireBtnNotFiring");
     unumployed = parseInt(document.getElementById("jobsTitleUnemployed").innerHTML);
     if (moduleJob && notfiringMode && unumployed)
@@ -121,7 +141,7 @@ function mainLoop() {
         }
     }
   
-    // Upgrades
+    // UPGRADES
     if (moduleUpgrade){
         for (var upgrade in upgradeList) {
             upgrade = upgradeList[upgrade];
@@ -132,7 +152,7 @@ function mainLoop() {
         }
     }
 
-    // Equipments
+    // EQUIPMENTS
     if (moduleEquipment){
         for (var equipment in equipmentList) {
             equipment = equipmentList[equipment];
