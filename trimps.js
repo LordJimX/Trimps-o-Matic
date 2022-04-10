@@ -12,7 +12,7 @@ var buyStorageThreshold = 0.9;
 var lumberRatio = 1; // for 1 farmer
 var minerRatio = 1; // for 1 farmer
 var scientistRatio = 0; // for 1 farmer
-var baseJobThreshold = 2; // workers lept unumployed for high level jobs (trainer...)
+var baseJobThreshold = 5; // workers lept unumployed for high level jobs (trainer...)
 
 // UPGRADE SETTINGS
 var buyShieldblock = true;
@@ -100,19 +100,23 @@ function mainLoop() {
             miner = parseInt(document.getElementById("MinerOwned").innerHTML);
             scientist = parseInt(document.getElementById("ScientistOwned").innerHTML);
             if (scientist / farmer < scientistRatio){
-                document.getElementById("Scientific").click();
+                //document.getElementById("Scientific").click();
+                buyJob("Scientific");
                 debug("Buy Scientific job");
             }
             else if (lumber / farmer < lumberRatio){
-                document.getElementById("Lumberjack").click();
+                //document.getElementById("Lumberjack").click();
+                buyJob("Lumberjack");
                 debug("Buy Lumberjack job");
             }
             else if (miner / farmer < minerRatio){
-                document.getElementById("Miner").click();
+                //document.getElementById("Miner").click();
+                buyJob("Miner");
                 debug("Buy Miner job");
             }
             else{
-                document.getElementById("Farmer").click();
+                //document.getElementById("Farmer").click();
+                buyJob("Farmer");
                 debug("Buy Farmer job");
             }
         }
