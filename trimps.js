@@ -113,6 +113,7 @@ function mainLoop() {
     notfiringMode = document.getElementById("fireBtn").classList.contains("fireBtnNotFiring");
     unumployed = parseInt(document.getElementById("jobsTitleUnemployed").innerHTML);
     trainer = parseInt(document.getElementById("TrainerOwned").innerHTML);
+    explorer = parseInt(document.getElementById("ExplorerOwned").innerHTML);
     farmer = parseInt(document.getElementById("FarmerOwned").innerHTML);
     lumber = parseInt(document.getElementById("LumberjackOwned").innerHTML);
     miner = parseInt(document.getElementById("MinerOwned").innerHTML);
@@ -123,8 +124,6 @@ function mainLoop() {
         getTrainer = getTrainer && (750 * Math.pow(1.1, trainer) < trainerBuyThreshold * foodOwned);
         getExplorer = !!document.getElementById("Explorer") && document.getElementById("Explorer").classList.contains('thingColorCanAfford');
         getExplorer = getExplorer && (15000 * Math.pow(1.1, explorer) < explorerBuyThreshold * foodOwned);
-        debug(15000 * Math.pow(1.1, explorer));
-        debug(explorerBuyThreshold * foodOwned);
         if (getTrainer) {
             buyJob("Trainer", true, true);
             debug("Buy Trainer job");
