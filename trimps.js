@@ -69,15 +69,15 @@ function mainLoop() {
     woodBar = parseFloat(document.getElementById('woodBar').style.width) / 100;
     metalBar = parseFloat(document.getElementById('metalBar').style.width) / 100;
     if (foodBar > buyStorageThreshold){
-        debug('Buy Barn');
+        debug('Buy Barn - ' + foodBar);
         buyBuilding('Barn');
     }
     if (woodBar > buyStorageThreshold){
-        debug('Buy Shed');
+        debug('Buy Shed - ' + woodBar);
         buyBuilding('Shed');
     }
     if (metalBar > buyStorageThreshold){
-        debug('Buy Forge');
+        debug('Buy Forge - ' + metalBar);
         buyBuilding('Forge');
     }
 
