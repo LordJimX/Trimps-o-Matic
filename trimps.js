@@ -10,7 +10,7 @@ var buyStorageThreshold = 0.5;
 
 // JOB SETTINGS
 var lumberRatio = 1; // for 1 farmer
-var minerRatio = 1; // for 1 farmer
+var minerRatio = 1.3; // for 1 farmer
 var scientistRatio = 0; // for 1 farmer
 var baseJobThreshold = 5; // workers lept unumployed for high level jobs (trainer...)
 
@@ -65,7 +65,7 @@ function mainLoop() {
     debug("Start main loop");
     
     // Storages
-    foodOwned = parseInt(document.getElementById('foodOwned').innerHTML);
+    /*foodOwned = parseInt(document.getElementById('foodOwned').innerHTML);
     debug(foodOwned);
     foodMax = parseInt(document.getElementById('foodMax').innerHTML);
     debug(foodMax);
@@ -76,18 +76,20 @@ function mainLoop() {
     metalOwned = parseInt(document.getElementById('metalOwned').innerHTML);
     debug(metalOwned);
     metalMax = parseInt(document.getElementById('metalMax').innerHTML);
-    debug(metalMax);
+    debug(metalMax);*/
+    woodBar = parseFloat(document.getElementById('woodBar').style.width);
+    debug('wood bar ' + woodBar);
     if (foodOwned / foodMax > buyStorageThreshold){
         debug('Buy Barn');
-        document.getElementById('barn').click()
+        //document.getElementById('Barn').click()
     }
     if (woodOwned / woodMax > buyStorageThreshold){
         debug('Buy Shed');
-        document.getElementById('shed').click()
+        //document.getElementById('Shed').click()
     }
     if (metalOwned / metalMax > buyStorageThreshold){
         debug('Buy Forge');
-        document.getElementById('forge').click()
+        //document.getElementById('Forge').click()
     }
 
     // Jobs
