@@ -101,22 +101,22 @@ function mainLoop() {
             scientist = parseInt(document.getElementById("ScientistOwned").innerHTML);
             if (scientist / farmer < scientistRatio){
                 //document.getElementById("Scientific").click();
-                buyJob("Scientific");
+                buyJob("Scientific", true, true);
                 debug("Buy Scientific job");
             }
             else if (lumber / farmer < lumberRatio){
                 //document.getElementById("Lumberjack").click();
-                buyJob("Lumberjack");
+                buyJob("Lumberjack", true, true);
                 debug("Buy Lumberjack job");
             }
             else if (miner / farmer < minerRatio){
                 //document.getElementById("Miner").click();
-                buyJob("Miner");
+                buyJob("Miner", true, true);
                 debug("Buy Miner job");
             }
             else{
                 //document.getElementById("Farmer").click();
-                buyJob("Farmer");
+                buyJob("Farmer", true, true);
                 debug("Buy Farmer job");
             }
         }
