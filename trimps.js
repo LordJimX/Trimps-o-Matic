@@ -62,7 +62,6 @@ function activateToM() {
 }
 
 function mainLoop() {
-    debug("Start main loop");
     
     // Storages
     foodBar = parseFloat(document.getElementById('foodBar').style.width) / 100;
@@ -70,15 +69,15 @@ function mainLoop() {
     metalBar = parseFloat(document.getElementById('metalBar').style.width) / 100;
     if (foodBar > buyStorageThreshold){
         debug('Buy Barn - ' + foodBar);
-        buyBuilding('Barn');
+        buyBuilding('Barn', true, true);
     }
     if (woodBar > buyStorageThreshold){
         debug('Buy Shed - ' + woodBar);
-        buyBuilding('Shed');
+        buyBuilding('Shed', true, true);
     }
     if (metalBar > buyStorageThreshold){
         debug('Buy Forge - ' + metalBar);
-        buyBuilding('Forge');
+        buyBuilding('Forge', true, true);
     }
 
     // Jobs
