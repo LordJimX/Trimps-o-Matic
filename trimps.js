@@ -1,3 +1,11 @@
+// ==UserScript==
+// @name     trimps
+// @version  1.1
+// @grant    none
+// @include  https://trimps.github.io/
+// @run-at   document-idle
+// ==/UserScript==
+
 // MODULES
 var moduleJob = true;
 var moduleUpgrade = true;
