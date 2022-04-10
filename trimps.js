@@ -65,17 +65,17 @@ function mainLoop() {
     debug("Start main loop");
     
     // Storages
-    foodOwned = document.getElementById('foodOwned');
+    foodOwned = parseInt(document.getElementById('foodOwned').innerHTML);
     debug(foodOwned);
-    foodMax = document.getElementById('foodMax');
+    foodMax = parseInt(document.getElementById('foodMax').innerHTML);
     debug(foodMax);
-    woodOwned = document.getElementById('woodOwned');
+    woodOwned = parseInt(document.getElementById('woodOwned').innerHTML);
     debug(woodOwned);
-    woodMax = document.getElementById('woodMax');
+    woodMax = parseInt(document.getElementById('woodMax').innerHTML);
     debug(woodMax);
-    metalOwned = document.getElementById('metalOwned');
+    metalOwned = parseInt(document.getElementById('metalOwned').innerHTML);
     debug(metalOwned);
-    metalMax = document.getElementById('metalMax');
+    metalMax = parseInt(document.getElementById('metalMax').innerHTML);
     debug(metalMax);
     if (foodOwned / foodMax > buyStorageThreshold){
         debug('Buy Barn');
