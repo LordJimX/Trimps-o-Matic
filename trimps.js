@@ -22,7 +22,7 @@ var buySupershield = false;
 
 debug("Trimp-o-matic started");
 
-var runInterval = 1000;      //How often to loop through logic
+var runInterval = 1000; //main loop interval
 var ToMactivated = false;
 var ToMinterval;
 
