@@ -9,6 +9,8 @@ var moduleHouse = true;
 var buyStorageThreshold = 0.8;
 
 // JOB SETTINGS
+var trainerBuyThreshold = 0.1; // cost of trainer / owned food
+var explorerBuyThreshold = 0.1; // cost of explorer / owned food
 var lumberRatio = 1; // for 1 farmer
 var minerRatio = 1.3; // for 1 farmer
 var scientistRatio = 0; // for 1 farmer
@@ -26,9 +28,11 @@ var runInterval = 1000; //main loop interval
 var ToMactivated = false;
 var ToMinterval;
 
+var foodOwned, woodOwned, metalOwned;
 var foodBar, woodBar, metalBar;
 var hut, house, mansion, hotel;
-var notfiringMode, unumployed, farmer, lumber, miner, scientist;
+var notfiringMode, unumployed, trainer, explorer, farmer, lumber, miner, scientist;
+var getTrainer, getExplorer;
 var equipment, upgrade;
 var upgradeList = ['Miners', 'Scientists', 'Coordination', 'Speedminer', 'Speedlumber', 'Speedfarming', 'Speedscience', 'Speedexplorer', 'Megaminer', 'Megalumber', 'Megafarming', 'Megascience', 'Efficiency', 'TrainTacular', 'Trainers', 'Explorers', 'Blockmaster', 'Battle', 'Bloodlust', 'Bounty', 'Egg', 'Anger', 'Formations', 'Dominance', 'Barrier', 'UberHut', 'UberHouse', 'UberMansion', 'UberHotel', 'UberResort', 'Trapstorm', 'Gigastation', 'Potency', 'Magmamancers'];
 if (buyShieldblock)
@@ -63,21 +67,26 @@ function activateToM() {
 }
 
 function mainLoop() {
+
+    // RESSOURCES
+    foodOwned = parseFloat(document.getElementById('foodOwned').innerHTML);
+    woodOwned = parseFloat(document.getElementById('woodOwned').innerHTML);
+    metalOwned = parseFloat(document.getElementById('metalOwned').innerHTML);
+    foodMax = parseFloat(document.getElementById('foodMax').innerHTML);
+    woodMax = parseFloat(document.getElementById('woodMax').innerHTML);
+    metalMax = parseFloat(document.getElementById('metalMax').innerHTML);
     
     // STORAGES
-    foodBar = parseFloat(document.getElementById('foodBar').style.width) / 100;
-    woodBar = parseFloat(document.getElementById('woodBar').style.width) / 100;
-    metalBar = parseFloat(document.getElementById('metalBar').style.width) / 100;
-    if (foodBar > buyStorageThreshold && moduleStorage){
-        debug('Buy Barn - ' + foodBar);
+    if (foodOwned / foodMax > buyStorageThreshold && moduleStorage){
+        debug('Buy Barn');
         buyBuilding('Barn', true, true);
     }
-    if (woodBar > buyStorageThreshold && moduleStorage){
-        debug('Buy Shed - ' + woodBar);
+    if (woodOwned / woodMax > buyStorageThreshold && moduleStorage){
+        debug('Buy Shed');
         buyBuilding('Shed', true, true);
     }
-    if (metalBar > buyStorageThreshold && moduleStorage){
-        debug('Buy Forge - ' + metalBar);
+    if (metalOwned / metalMax > buyStorageThreshold && moduleStorage){
+        debug('Buy Forge');
         buyBuilding('Forge', true, true);
     }
 
@@ -103,35 +112,37 @@ function mainLoop() {
     // JOBS
     notfiringMode = document.getElementById("fireBtn").classList.contains("fireBtnNotFiring");
     unumployed = parseInt(document.getElementById("jobsTitleUnemployed").innerHTML);
+    trainer = parseInt(document.getElementById("TrainerOwned").innerHTML);
+    farmer = parseInt(document.getElementById("FarmerOwned").innerHTML);
+    lumber = parseInt(document.getElementById("LumberjackOwned").innerHTML);
+    miner = parseInt(document.getElementById("MinerOwned").innerHTML);
+    scientist = parseInt(document.getElementById("ScientistOwned").innerHTML);
     if (moduleJob && notfiringMode && unumployed)
     {
-        if (!!document.getElementById("Trainer") && document.getElementById("Trainer").classList.contains('thingColorCanAfford')) {
+        getTrainer = !!document.getElementById("Trainer") && document.getElementById("Trainer").classList.contains('thingColorCanAfford');
+        getTrainer = getTrainer && (750 * Math.pow(1.1, trainer) < trainerBuyThreshold * foodOwned);
+        getExplorer = !!document.getElementById("Explorer") && document.getElementById("Explorer").classList.contains('thingColorCanAfford');
+        getExplorer = getExplorer && (15000 * Math.pow(1.1, explorer) < explorerBuyThreshold * foodOwned);
+        if (getTrainer) {
             buyJob("Trainer", true, true);
             debug("Buy Trainer job");
         }
-        else if (!!document.getElementById("Explorer") && document.getElementById("Explorer").classList.contains('thingColorCanAfford')) {
+        else if (getExplorer) {
             buyJob("Explorer", true, true);
             debug("Buy Explorer job");
         }
         else if (unumployed > baseJobThreshold){
-            farmer = parseInt(document.getElementById("FarmerOwned").innerHTML);
-            lumber = parseInt(document.getElementById("LumberjackOwned").innerHTML);
-            miner = parseInt(document.getElementById("MinerOwned").innerHTML);
-            scientist = parseInt(document.getElementById("ScientistOwned").innerHTML);
             if (scientist / farmer < scientistRatio){
-                //document.getElementById("Scientific").click();
                 buyJob("Scientific", true, true);
                 debug("Buy Scientific job");
             }
-            else if (lumber / farmer < lumberRatio){
-                //document.getElementById("Lumberjack").click();
-                buyJob("Lumberjack", true, true);
-                debug("Buy Lumberjack job");
-            }
             else if (miner / farmer < minerRatio){
-                //document.getElementById("Miner").click();
                 buyJob("Miner", true, true);
                 debug("Buy Miner job");
+            }
+            else if (lumber / farmer < lumberRatio){
+                buyJob("Lumberjack", true, true);
+                debug("Buy Lumberjack job");
             }
             else{
                 //document.getElementById("Farmer").click();

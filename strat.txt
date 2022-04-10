@@ -1,0 +1,17 @@
+Trips-o-Matic Strategy
+
+// STORAGE
+Items: Barn, Shed, Forge
+Buy a storage when resource / storage ratio reach a given value
+
+// HOUSES
+Items: Hut, House, Mansion, Hotel
+
+// JOB
+Item: Farmer, Lumberjack, Miner, Scientist, Trainer, Explorer
+1. Buy Trainer if their cost is < trainerBuyThreshold
+2. Buy Explorer if their cost is < explorerBuyThreshold
+Keep a given amount of worker for high level jobs (Trainer, Explorer...)
+3. Buy Miner if miner / farmer ratio is < minerRatio
+4. Buy Lumberjack if lumberjack / farmer ratio is < lumberRatio
+5. Buy Farmer
