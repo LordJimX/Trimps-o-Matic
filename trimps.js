@@ -6,7 +6,7 @@ var moduleStorage = true;
 var moduleHouse = true;
 
 // STORAGE SETTINGS
-var buyStorageThreshold = 0.9;
+var buyStorageThreshold = 0.5;
 
 // JOB SETTINGS
 var lumberRatio = 1; // for 1 farmer
@@ -66,11 +66,17 @@ function mainLoop() {
     
     // Storages
     foodOwned = document.getElementById('foodOwned');
+    debug(foodOwned);
     foodMax = document.getElementById('foodMax');
+    debug(foodMax);
     woodOwned = document.getElementById('woodOwned');
+    debug(woodOwned);
     woodMax = document.getElementById('woodMax');
+    debug(woodMax);
     metalOwned = document.getElementById('metalOwned');
+    debug(metalOwned);
     metalMax = document.getElementById('metalMax');
+    debug(metalMax);
     if (foodOwned / foodMax > buyStorageThreshold){
         debug('Buy Barn');
         document.getElementById('barn').click()
