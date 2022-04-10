@@ -1,5 +1,5 @@
 // MODULES
-var moduleJob = false;
+var moduleJob = true;
 var moduleUpgrade = true;
 var moduleEquipment = true;
 var moduleStorage = true;
