@@ -1,5 +1,5 @@
 // MODULES
-var moduleJob = true;
+var moduleJob = false;
 var moduleUpgrade = true;
 var moduleEquipment = true;
 var moduleStorage = true;
@@ -68,15 +68,15 @@ function mainLoop() {
     foodBar = parseFloat(document.getElementById('foodBar').style.width) / 100;
     woodBar = parseFloat(document.getElementById('woodBar').style.width) / 100;
     metalBar = parseFloat(document.getElementById('metalBar').style.width) / 100;
-    if (foodBar > buyStorageThreshold){
+    if (foodBar > buyStorageThreshold && moduleStorage){
         debug('Buy Barn - ' + foodBar);
         buyBuilding('Barn', true, true);
     }
-    if (woodBar > buyStorageThreshold){
+    if (woodBar > buyStorageThreshold && moduleStorage){
         debug('Buy Shed - ' + woodBar);
         buyBuilding('Shed', true, true);
     }
-    if (metalBar > buyStorageThreshold){
+    if (metalBar > buyStorageThreshold && moduleStorage){
         debug('Buy Forge - ' + metalBar);
         buyBuilding('Forge', true, true);
     }
@@ -87,13 +87,13 @@ function mainLoop() {
     mansion = parseInt(document.getElementById('MansionOwned').innerHTML);
     hotel = parseInt(document.getElementById('HotelOwned').innerHTML);
 
-    if (!!document.getElementById("Hotel")){
+    if (!!document.getElementById("Hotel") && moduleHouse){
         
     }
-    else if (!!document.getElementById("Mansion")){
+    else if (!!document.getElementById("Mansion" && moduleHouse)){
         
     }
-    else if (!!document.getElementById("House")){
+    else if (!!document.getElementById("House" && moduleHouse)){
         
     }
     else {
