@@ -65,42 +65,34 @@ function mainLoop() {
     debug("Start main loop");
     
     // Storages
-    /*foodOwned = parseInt(document.getElementById('foodOwned').innerHTML);
-    debug(foodOwned);
-    foodMax = parseInt(document.getElementById('foodMax').innerHTML);
-    debug(foodMax);
-    woodOwned = parseInt(document.getElementById('woodOwned').innerHTML);
-    debug(woodOwned);
-    woodMax = parseInt(document.getElementById('woodMax').innerHTML);
-    debug(woodMax);
-    metalOwned = parseInt(document.getElementById('metalOwned').innerHTML);
-    debug(metalOwned);
-    metalMax = parseInt(document.getElementById('metalMax').innerHTML);
-    debug(metalMax);*/
-    woodBar = parseFloat(document.getElementById('woodBar').style.width);
-    debug('wood bar ' + woodBar);
-    if (foodOwned / foodMax > buyStorageThreshold){
+    foodBar = parseFloat(document.getElementById('foodBar').style.width) / 100;
+    woodBar = parseFloat(document.getElementById('woodBar').style.width) / 100;
+    metalBar = parseFloat(document.getElementById('metalBar').style.width) / 100;
+    if (foodBar > buyStorageThreshold){
         debug('Buy Barn');
-        //document.getElementById('Barn').click()
+        buyBuilding('Barn');
     }
-    if (woodOwned / woodMax > buyStorageThreshold){
+    if (woodBar > buyStorageThreshold){
         debug('Buy Shed');
-        //document.getElementById('Shed').click()
+        buyBuilding('Shed');
     }
-    if (metalOwned / metalMax > buyStorageThreshold){
+    if (metalBar > buyStorageThreshold){
         debug('Buy Forge');
-        //document.getElementById('Forge').click()
+        buyBuilding('Forge');
     }
 
     // Jobs
-    notfiringMode = document.getElementById("fireBtn").classList.contains("fireBtnNotFiring")
+    notfiringMode = document.getElementById("fireBtn").classList.contains("fireBtnNotFiring");
     unumployed = parseInt(document.getElementById("jobsTitleUnemployed").innerHTML);
     if (moduleJob && notfiringMode && unumployed)
     {
-        if (!!document.getElementById("Trainer") && document.getElementById("Trainer").classList.contains('thingColorCanAfford'))
-        {
-            document.getElementById("Trainer").click();
+        if (!!document.getElementById("Trainer") && document.getElementById("Trainer").classList.contains('thingColorCanAfford')) {
+            buyJob("Trainer", true, true);
             debug("Buy Trainer job");
+        }
+        else if (!!document.getElementById("Explorer") && document.getElementById("Explorer").classList.contains('thingColorCanAfford')) {
+            buyJob("Explorer", true, true);
+            debug("Buy Explorer job");
         }
         else if (unumployed > baseJobThreshold){
             farmer = parseInt(document.getElementById("FarmerOwned").innerHTML);
@@ -136,7 +128,7 @@ function mainLoop() {
             upgrade = upgradeList[upgrade];
             if (!!document.getElementById(upgrade) && document.getElementById(upgrade).classList.contains('thingColorCanAfford')){
                 debug("Buy " + upgrade + " upgrade");
-                document.getElementById(upgrade).click();
+                buyUpgrade(upgrade, true, true);
             }
         }
     }
@@ -147,7 +139,7 @@ function mainLoop() {
             equipment = equipmentList[equipment];
             if (!!document.getElementById(equipment) && document.getElementById(equipment).classList.contains('thingColorCanAfford')){
                 debug("Buy " + equipment + " equipement");
-                document.getElementById(equipment).click();
+                buyUpgrade(equipment, true, true);
             }
         }
     }
