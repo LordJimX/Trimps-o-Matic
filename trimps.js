@@ -88,16 +88,16 @@ function mainLoop() {
     hotel = parseInt(document.getElementById('HotelOwned').innerHTML);
 
     if (!!document.getElementById("Hotel")){
-        continue;
+        
     }
     else if (!!document.getElementById("Mansion")){
-        continue;
+        
     }
     else if (!!document.getElementById("House")){
-        continue;
+        
     }
     else {
-        continue;
+        
     }
 
     // JOBS
