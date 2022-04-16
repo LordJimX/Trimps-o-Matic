@@ -1,12 +1,12 @@
 // MODULES
-var moduleJob = true;
-var moduleUpgrade = true;
-var moduleEquipment = true;
+var moduleJob = false;
+var moduleUpgrade = false;
+var moduleEquipment = false;
 var moduleStorage = true;
-var moduleHouse = true;
+var moduleHouse = false;
 
 // STORAGE SETTINGS
-var buyStorageThreshold = 0.8;
+var buyStorageThreshold = 0.99;
 
 // JOB SETTINGS
 var trainerBuyThreshold = 0.1; // cost of trainer / owned food
@@ -146,7 +146,6 @@ function mainLoop() {
                 debug("Buy Lumberjack job");
             }
             else{
-                //document.getElementById("Farmer").click();
                 buyJob("Farmer", true, true);
                 debug("Buy Farmer job");
             }
