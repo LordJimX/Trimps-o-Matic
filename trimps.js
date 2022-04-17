@@ -97,7 +97,7 @@ function activateToM() {
         moduleJob = document.getElementById('jobsCheck').checked;
         moduleUpgrade = document.getElementById('upgradesCheck').checked;
         moduleEquipment = document.getElementById('equipmentsCheck').checked;
-        moduleStorage = document.getElementById('stroagesCheck').checked;
+        moduleStorage = document.getElementById('storagesCheck').checked;
         moduleHouse = document.getElementById('housesCheck').checked;
         moduleMapForEquipment = document.getElementById('mapForEquipmentCheck').checked;
         debug("ToM activated");
