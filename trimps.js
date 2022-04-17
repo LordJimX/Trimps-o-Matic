@@ -262,7 +262,7 @@ function mainLoop() {
         // run top level map to get upgades if no maps bonus
         if (location == 'World' && document.getElementById('mapBonus').innerHTML == ''){
             debug('Create Map to get equipment upgrades');
-            createAndRunMap(9, 9, 9, 'Moutain', 0, 'Repeat for Items');
+            //createAndRunMap(9, 9, 9, 'Moutain', 0, 'Repeat for Items');
         }
 
         // detect if in world and upgrades are available. Then run -2 level map to farm for.
@@ -275,13 +275,13 @@ function mainLoop() {
         }
         if (location == 'World' && equipmentUpgradeAvailable){
             debug('Equipment upgrade available, create a map to farm');
-            createAndRunMap(9, 9, 9, 'Moutain', -3, 'Repeat Forever');
+            //createAndRunMap(9, 9, 9, 'Moutain', -3, 'Repeat Forever');
         }
 
         // detect all upgrades purchase and return to world
         if (location == 'Maps' && !equipmentUpgradeAvailable){
             debug('No more equipment upgrade available, go back to world');
-            repeatClicked();
+            //repeatClicked();
         }
     }
 }
