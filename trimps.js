@@ -3,11 +3,15 @@ var moduleJob = false;
 var moduleUpgrade = false;
 var moduleEquipment = false;
 var moduleStorage = true;
-var moduleHouse = false;
+var moduleStructure = false;
 var moduleMapForEquipment = false;
 
 // STORAGE SETTINGS
 var buyStorageThreshold = 0.9;
+
+// STRUCTURE SETTINGS
+var gymBuyThreshold = 0.2; // cost of gym / owned wood
+var tributeBuyThreshold = 0.2; // cost of tribute / owned food
 
 // JOB SETTINGS
 var trainerBuyThreshold = 0.2; // cost of trainer / owned food
@@ -32,26 +36,12 @@ var ToMactivated = false;
 var ToMsettingsOpened = false;
 var ToMinterval;
 
-var foodOwned = 0;
-var woodOwned = 0;
-var metalOwned = 0;
-var fragmentsOwned = 0;
-var gemsOwned = 0;
-var scienceOwned = 0;
-var heliumOwned = 0;
-var foodMax = 1;
-var woodMax = 1;
-var metalMax = 1;
-var hut, house, mansion, hotel;
-var unumployed = 0;
+var foodOwned, woodOwned, metalOwned, fragmentsOwned, gemsOwned, scienceOwned, heliumOwned;
+var foodMax, woodMax, metalMax,
+var hut, house, mansion, hotel, resort, gym, tribute, nursery;
+var getGym, getTribute, getNursery;
 var notfiringMode;
-var trainer = 0;
-var explorer = 0;
-var farmer = 0;
-var lumber = 0;
-var miner = 0;
-var scientist = 0;
-var maxEmployed = 0;
+var unumployed, trainer, explorer, farmer, lumber, miner, scientist, maxEmployed;
 var getTrainer, getExplorer;
 var equipment, upgrade;
 var upgradeList = ['Miners', 'Scientists', 'Coordination', 'Speedminer', 'Speedlumber', 'Speedfarming', 'Speedscience', 'Speedexplorer', 'Megaminer', 'Megalumber', 'Megafarming', 'Megascience', 'Efficiency', 'TrainTacular', 'Trainers', 'Explorers', 'Blockmaster', 'Battle', 'Bloodlust', 'Bounty', 'Egg', 'Anger', 'Formations', 'Dominance', 'Barrier', 'UberHut', 'UberHouse', 'UberMansion', 'UberHotel', 'UberResort', 'Trapstorm', 'Gigastation', 'Potency', 'Magmamancers', 'Gymystic'];
@@ -82,7 +72,7 @@ document.getElementById("food").insertBefore(testButton, document.getElementById
 $("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
 $("body").append($("<div/>", {"id": "ToMsettings", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
     $("<input>", {"type": "checkbox", "id": "storagesCheck", "checked": moduleStorage}), $("<label/>", {"for": "storagesCheck"}).append(" storage "), $("<br>"),
-    $("<input>", {"type": "checkbox", "id": "housesCheck", "checked": moduleHouse}), $("<label/>", {"for": "housesCheck"}).append(" houses "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "structuresCheck", "checked": moduleStructure}), $("<label/>", {"for": "structuresCheck"}).append(" structures "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "jobsCheck", "checked": moduleJob}), $("<label/>", {"for": "jobsCheck"}).append(" jobs "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "equipmentsCheck", "checked": moduleEquipment}), $("<label/>", {"for": "equipmentsCheck"}).append(" equipments "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "upgradesCheck", "checked": moduleUpgrade}), $("<label/>", {"for": "upgradesCheck"}).append(" upgrades "), $("<br>"),
@@ -111,7 +101,7 @@ function activateToM() {
         moduleUpgrade = document.getElementById('upgradesCheck').checked;
         moduleEquipment = document.getElementById('equipmentsCheck').checked;
         moduleStorage = document.getElementById('storagesCheck').checked;
-        moduleHouse = document.getElementById('housesCheck').checked;
+        moduleStructure = document.getElementById('structuresCheck').checked;
         moduleMapForEquipment = document.getElementById('mapForEquipmentCheck').checked;
         debug("ToM activated");
         if (moduleJob)
@@ -122,8 +112,8 @@ function activateToM() {
             debug('--> Module equipments activated');
         if (moduleStorage)
             debug('--> Module storages activated');
-        if (moduleHouse)
-            debug('--> Module houses activated');
+        if (moduleStructure)
+            debug('--> Module structures activated');
         if (moduleMapForEquipment)
             debug('--> Module mapForEquipment activated');
         ToMinterval = setInterval(mainLoop, runInterval);
@@ -156,49 +146,41 @@ function mainLoop() {
         buyBuilding('Forge', true, true);
     }
 
-    // HOUSES
-    getRessources();
-    if (!!document.getElementById('HutOwned'))
-        hut = parseInt(document.getElementById('HutOwned').innerHTML);
-    if (!!document.getElementById('HouseOwned'))
-        house = parseInt(document.getElementById('HouseOwned').innerHTML);
-    if (!!document.getElementById('MansionOwned'))
-        mansion = parseInt(document.getElementById('MansionOwned').innerHTML);
-    if (!!document.getElementById('HotelOwned'))
-        hotel = parseInt(document.getElementById('HotelOwned').innerHTML);
+    // STRUCTURES
+    if (moduleStructure){
+        getRessources();
+        getStructures();
+        
+        getGym = !!document.getElementById("Gym") && (400 * Math.pow(1.185, gym) < gymBuyThreshold * woodOwned);
+        if (getGym){
+            debug('Buy Gym structure');
+            buyBuilding('Gym', true, true);
+        }
 
-    if (!!document.getElementById("Hotel") && moduleHouse){
-        
-    }
-    else if (!!document.getElementById("Mansion" && moduleHouse)){
-        
-    }
-    else if (!!document.getElementById("House" && moduleHouse)){
-        
-    }
-    else {
-        
+        getTribute = !!document.getElementById("Tribute") && (10000 * Math.pow(1.05, tribute) < tributeBuyThreshold * foodOwned);
+        if (getTribute){
+            debug('Buy Tribute structure');
+            buyBuilding('Tribute', true, true);
+        }
+
+        if (!!document.getElementById("Hotel") && moduleStructure){
+            
+        }
+        else if (!!document.getElementById("Mansion" && moduleStructure)){
+            
+        }
+        else if (!!document.getElementById("House" && moduleStructure)){
+            
+        }
+        else {
+            
+        }
     }
 
     // JOBS
     getRessources();
+    getJobs();
     notfiringMode = document.getElementById("fireBtn").classList.contains("fireBtnNotFiring");
-    if (!!document.getElementById("jobsTitleUnemployed"))
-        unumployed = parseInt(document.getElementById("jobsTitleUnemployed").innerHTML);
-    if (!!document.getElementById("TrainerOwned"))
-        trainer = parseInt(document.getElementById("TrainerOwned").innerHTML);
-    if (!!document.getElementById("ExplorerOwned"))
-        explorer = parseInt(document.getElementById("ExplorerOwned").innerHTML);
-    if (!!document.getElementById("FarmerOwned"))
-        farmer = parseInt(document.getElementById("FarmerOwned").innerHTML);
-    if (!!document.getElementById("LumberjackOwned"))
-        lumber = parseInt(document.getElementById("LumberjackOwned").innerHTML);
-    if (!!document.getElementById("MinerOwned"))
-        miner = parseInt(document.getElementById("MinerOwned").innerHTML);
-    if (!!document.getElementById("ScientistOwned"))
-        scientist = parseInt(document.getElementById("ScientistOwned").innerHTML);
-    if (!!document.getElementById("maxEmployed"))
-        maxEmployed = parseInt(document.getElementById("maxEmployed").innerHTML);
     
     if (moduleJob && notfiringMode && unumployed)
     {
@@ -257,8 +239,8 @@ function mainLoop() {
     }
 
     // MAP FOR EQUIPMENT
-    getRessources();
     if (moduleMapForEquipment){
+        getRessources();
         //get physical battle location: World or Maps
         if (document.getElementById('worldName').textContent.includes('Zone'))
             battleLocation = 'World';
@@ -337,29 +319,40 @@ function createAndRunMap(loot, size, diff, biome, level, repeatUntil){
 }
 
 function getRessources(){
-    // RESSOURCES
-    if (!!document.getElementById('foodOwned')){
-        foodOwned = parseFloat(document.getElementById('foodOwned').innerHTML);
-        foodMax = parseFloat(document.getElementById('foodMax').innerHTML);
-    }
-    if (!!document.getElementById('woodOwned')){
-        woodOwned = parseFloat(document.getElementById('woodOwned').innerHTML);
-        woodMax = parseFloat(document.getElementById('woodMax').innerHTML);
-    }
-    if (!!document.getElementById('metalOwned')){
-        metalOwned = parseFloat(document.getElementById('metalOwned').innerHTML);
-        metalMax = parseFloat(document.getElementById('metalMax').innerHTML);
-    }
-    if (!!document.getElementById('scienceOwned'))
-        scienceOwned = parseFloat(document.getElementById('scienceOwned').innerHTML);
-    if (!!document.getElementById('scienceOwned'))
-        fragmentsOwned = parseFloat(document.getElementById('fragmentsOwned').innerHTML);
-    if (!!document.getElementById('gemsOwned'))
-        gemsOwned = parseFloat(document.getElementById('gemsOwned').innerHTML);
-    if (!!document.getElementById('heliumOwned'))
-        heliumOwned = parseFloat(document.getElementById('heliumOwned').innerHTML);
+    foodOwned = !!document.getElementById('foodOwned') ? parseFloat(document.getElementById('foodOwned').innerHTML) : 0;
+    foodMax = !!document.getElementById('foodMax') ? parseFloat(document.getElementById('foodMax').innerHTML) : 1;
+    woodOwned = !!document.getElementById('woodOwned') ? parseFloat(document.getElementById('woodOwned').innerHTML) : 0;
+    woodMax = !!document.getElementById('woodMax') ? parseFloat(document.getElementById('woodMax').innerHTML) : 1;
+    metalOwned = !!document.getElementById('metalOwned') ? parseFloat(document.getElementById('metalOwned').innerHTML) : 0;
+    metalMax = !!document.getElementById('metalMax') ? parseFloat(document.getElementById('metalMax').innerHTML) : 1;
+    scienceOwned = !!document.getElementById('scienceOwned') ? parseFloat(document.getElementById('scienceOwned').innerHTML) : 0;
+    fragmentsOwned = !!document.getElementById('scienceOwned') ? parseFloat(document.getElementById('fragmentsOwned').innerHTML) : 0;
+    gemsOwned = !!document.getElementById('gemsOwned') ? parseFloat(document.getElementById('gemsOwned').innerHTML) : 0;
+    heliumOwned = !!document.getElementById('heliumOwned') ? parseFloat(document.getElementById('heliumOwned').innerHTML) : 0;
 }
 
+function getStructures(){
+    hut = !!document.getElementById('HutOwned') ? parseInt(document.getElementById('HutOwned').innerHTML) : 0;
+    house = !!document.getElementById('HouseOwned') ? parseInt(document.getElementById('HouseOwned').innerHTML) : 0;
+    mansion = !!document.getElementById('MansionOwned') ? parseInt(document.getElementById('MansionOwned').innerHTML) : 0;
+    hotel = !!document.getElementById('HotelOwned') ? parseInt(document.getElementById('HotelOwned').innerHTML) : 0;
+    resort = !!document.getElementById('ResortOwned') ? parseInt(document.getElementById('ResortOwned').innerHTML) : 0;
+    gateway = !!document.getElementById('GatewayOwned') ? parseInt(document.getElementById('GatewayOwned').innerHTML) : 0;
+    gym = !!document.getElementById('GymOwned') ? parseInt(document.getElementById('GymOwned').innerHTML) : 0;
+    tribute = !!document.getElementById('TributeOwned') ? parseInt(document.getElementById('TributeOwned').innerHTML) : 0;
+    nursery = !!document.getElementById('NurseryOwned') ? parseInt(document.getElementById('NurseryOwned').innerHTML) : 0;
+}
+
+function getJobs(){
+    unumployed = !!document.getElementById("jobsTitleUnemployed") ? parseInt(document.getElementById("jobsTitleUnemployed").innerHTML) : 0;
+    trainer = !!document.getElementById("TrainerOwned") ? parseInt(document.getElementById("TrainerOwned").innerHTML) : 0;
+    explorer = !!document.getElementById("ExplorerOwned") ? parseInt(document.getElementById("ExplorerOwned").innerHTML) : 0;
+    farmer = !!document.getElementById("FarmerOwned") ? parseInt(document.getElementById("FarmerOwned").innerHTML) : 0;
+    lumber = !!document.getElementById("LumberjackOwned") ? parseInt(document.getElementById("LumberjackOwned").innerHTML) : 0;
+    miner = !!document.getElementById("MinerOwned") ? parseInt(document.getElementById("MinerOwned").innerHTML) : 0;
+    scientist = !!document.getElementById("ScientistOwned") ? parseInt(document.getElementById("ScientistOwned").innerHTML) : 0;
+    maxEmployed = !!document.getElementById("maxEmployed") ? parseInt(document.getElementById("maxEmployed").innerHTML) : 0;
+}
 
 function debug(text){
     console.log(text);
