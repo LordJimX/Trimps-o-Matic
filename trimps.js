@@ -1,9 +1,9 @@
 // MODULES
-var moduleJob = false;
-var moduleUpgrade = false;
-var moduleEquipment = false;
+var moduleJob = true;
+var moduleUpgrade = true;
+var moduleEquipment = true;
 var moduleStorage = true;
-var moduleStructure = false;
+var moduleStructure = true;
 var moduleMapForEquipment = false;
 
 // STORAGE SETTINGS
@@ -390,8 +390,12 @@ $("body").append(
                 $("<br>")
             ]),
             $("<td/>").append([
-                $("<label/>").append("Lumber"),
-                $("<input>", {"id": "lumberInput", "width": "20"}),
+                $("<label/>").append("rate to buy "),
+                $("<input>", {"id": "storageRateInput", "width": "20", "value": buyStorageThreshold}),
+                $("<br>"),
+                $("<label/>").append("Farm/Lumber/Miner/Scientist "),
+                $("<input>", {"id": "farmInput", "width": "20", "value": "1"}),
+                $("<input>", {"id": "lumberInput", "width": "20", "value", lumberRatio}),
                 $("<br>")
             ]),
         ])
