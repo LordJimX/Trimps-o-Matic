@@ -389,7 +389,7 @@ $("body").append(
                     $("<input>", {"id": "farmInput", "width": "40", "value": "1"}),
                     $("<input>", {"id": "lumberInput", "width": "40", "value": lumberRatio}),
                     $("<input>", {"id": "minerInput", "width": "40", "value": minerRatio}),
-                    $("<input>", {"id": "scientistInput", "width": "40", "value": scientistRatio})
+                    $("<input>", {"id": "scientistInput", "width": "40", "value": scientistRatio}),
                     $("<label/>").append("Max S"),
                     $("<input>", {"id": "maxScientistInput", "width": "40", "value": maxScientist}),
                     $("<br>"),
