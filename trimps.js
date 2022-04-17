@@ -37,7 +37,7 @@ var ToMsettingsOpened = false;
 var ToMinterval;
 
 var foodOwned, woodOwned, metalOwned, fragmentsOwned, gemsOwned, scienceOwned, heliumOwned;
-var foodMax, woodMax, metalMax,
+var foodMax, woodMax, metalMax;
 var hut, house, mansion, hotel, resort, gym, tribute, nursery;
 var getGym, getTribute, getNursery;
 var notfiringMode;
