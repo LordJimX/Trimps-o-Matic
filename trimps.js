@@ -369,7 +369,7 @@ $("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-ligh
 $("body").append(
     $("<div/>", {"id": "ToMsettingsTest", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
         $("<table/>").append([
-            $("<tr/>").append([
+            $("<tr/>", {"width": "150"}).append([
                 $("<td/>").append([
                     $("<input>", {"type": "checkbox", "id": "storagesCheckTest", "checked": moduleStorage}),
                     $("<label/>", {"for": "storagesCheckTest"}).append(" storage ")
@@ -431,6 +431,7 @@ $("body").append(
         ]) // table append
     ]) // div append
 ); // body append
+
 $(function() {
     $("#ToMsettingsTest").dialog({
         autoOpen: false, 
