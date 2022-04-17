@@ -254,13 +254,13 @@ function mainLoop() {
     // MAP FOR EQUIPMENT
     if (moduleMapForEquipment){
         //get physical battle location: World or Maps
-        if (document.getElementById('mapsBtnText').innerHTML.includes('World'))
+        if (document.getElementById('worldName').textContent.includes('Zone'))
             battleLocation = 'World';
         else
             battleLocation = 'Maps';
 
         // run top level map to get upgades if no maps bonus
-        if (battleLocation == 'World' && document.getElementById('mapBonus').textContent.trim() === ''){
+        if (battleLocation == 'World' && document.getElementById('mapBonus').textContent.trim() == ''){
             debug('Create Map to get equipment upgrades');
             //createAndRunMap(9, 9, 9, 'Moutain', 0, 'Repeat for Items');
         }
