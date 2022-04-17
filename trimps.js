@@ -390,6 +390,13 @@ $("body").append(
                     $("<input>", {"id": "lumberInput", "width": "40", "value": lumberRatio}),
                     $("<input>", {"id": "minerInput", "width": "40", "value": minerRatio}),
                     $("<input>", {"id": "scientistInput", "width": "40", "value": scientistRatio})
+                    $("<label/>").append("Max S"),
+                    $("<input>", {"id": "maxScientistInput", "width": "40", "value": maxScientist}),
+                    $("<br>"),
+                    $("<label/>").append("Trainer thld"),
+                    $("<input>", {"id": "trainerThresholdInput", "width": "40", "value": trainerBuyThreshold}),
+                    $("<label/>").append("Explorer thld"),
+                    $("<input>", {"id": "explorerThresholdInput", "width": "40", "value": explorerBuyThreshold})
                 ])
             ]),
             $("<tr/>").append([
