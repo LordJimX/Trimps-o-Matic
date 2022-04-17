@@ -386,16 +386,18 @@ $("body").append(
                 $("<label/>", {"for": "upgradesCheckTest"}).append(" upgrades "),
                 $("<br>"),
                 $("<input>", {"type": "checkbox", "id": "mapForEquipmentCheckTest", "checked": moduleMapForEquipment}),
-                $("<label/>", {"for": "mapForEquipmentCheckTest"}).append(" map for equipment "),
+                $("<label/>", {"for": "mapForEquipmentCheckTest"}).append(" map 4 eqpt "),
                 $("<br>")
             ]),
             $("<td/>").append([
                 $("<label/>").append("rate to buy "),
-                $("<input>", {"id": "storageRateInput", "width": "20", "value": buyStorageThreshold}),
+                $("<input>", {"id": "storageRateInput", "width": "50", "value": buyStorageThreshold}),
                 $("<br>"),
-                $("<label/>").append("Farm/Lumber/Miner/Scientist "),
-                $("<input>", {"id": "farmInput", "width": "20", "value": "1"}),
-                $("<input>", {"id": "lumberInput", "width": "20", "value": lumberRatio}),
+                $("<label/>").append("F / L / M / S "),
+                $("<input>", {"id": "farmInput", "width": "50", "value": "1"}),
+                $("<input>", {"id": "lumberInput", "width": "50", "value": lumberRatio}),
+                $("<input>", {"id": "minerInput", "width": "50", "value": minerRatio}),
+                $("<input>", {"id": "scientistInput", "width": "50", "value": scientistRatio}),
                 $("<br>")
             ]),
         ])
@@ -406,7 +408,7 @@ $(function() {
         autoOpen: false, 
         buttons: {'Ok': function(event){$("#ToMsettingsTest").dialog("close"); ToMsettingsOpened = false;},
             'Cancel': function(event){$("#ToMsettingsTest").dialog("close"); ToMsettingsOpened = false;}},
-        width: 500
+        width: 700
     });
 });
 
