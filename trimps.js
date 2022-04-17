@@ -53,7 +53,7 @@ if (buySupershield)
 var battleLocation, equipmentUpgradeAvailable;
 
 // Create UI
-creatUI();
+createUI();
 
 function activateToM() {
 
