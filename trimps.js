@@ -80,7 +80,7 @@ $(function() {
   $("#ToMsettings").dialog({
     autoOpen: false, 
     buttons: {'Ok': activateToM,
-        'Cancel': function(){$("#ToMsettings").dialog("close"); ToMsettingsOpened = false;};,
+        'Cancel': function(){$("#ToMsettings").dialog("close"); ToMsettingsOpened = false;};},
     width: 300
   });
 });
