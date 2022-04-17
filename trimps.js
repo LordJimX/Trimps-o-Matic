@@ -79,7 +79,8 @@ $("body").append($("<div/>", {"id": "ToMsettings", "title": "ToM settings", "sty
 $(function() {
   $("#ToMsettings").dialog({
     autoOpen: false, 
-    buttons: {OK: activateToM},
+    buttons: {'Ok': activateToM,
+        'Cancel': function(){$("#ToMsettings").dialog("close"); ToMsettingsOpened = false;};,
     width: 300
   });
 });
