@@ -10,8 +10,8 @@ var moduleMapForEquipment = false;
 var buyStorageThreshold = 0.9;
 
 // STRUCTURE SETTINGS
-var gymBuyThreshold = 0.2; // cost of gym / owned wood
-var tributeBuyThreshold = 0.2; // cost of tribute / owned food
+var gymBuyThreshold = 0.05; // cost of gym / owned wood
+var tributeBuyThreshold = 0.1; // cost of tribute / owned food
 
 // JOB SETTINGS
 var trainerBuyThreshold = 0.2; // cost of trainer / owned food
@@ -29,7 +29,7 @@ var buyShieldblock = false;
 // EQUPMENT SETTINGS
 var buySupershield = false;
 
-debug("Trimp-o-matic started");
+debug("Trimp-o-matic loaded");
 
 var runInterval = 1000; //main loop interval
 var ToMactivated = false;
