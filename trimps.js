@@ -68,7 +68,7 @@ document.getElementById("food").insertBefore(testButton, document.getElementById
 // Dialog box for ToM settings
 $("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
 $("body").append($("<div/>", {"id": "ToMsettings", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
-    $("<input>", {"type": "checkbox", "id": "storageCheck"}), $("<label/>", {"for": "storageCheck"}).append(" storage "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "storageCheck", "checked": moduleStorage}), $("<label/>", {"for": "storageCheck"}).append(" storage "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "housesCheck"}), $("<label/>", {"for": "housesCheck"}).append(" houses "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "jobsCheck"}), $("<label/>", {"for": "jobsCheck"}).append(" jobs "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "equipmentsCheck"}), $("<label/>", {"for": "equipmentsCheck"}).append(" equipments "), $("<br>"),
