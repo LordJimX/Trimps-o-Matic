@@ -4,7 +4,7 @@ var moduleUpgrade = false;
 var moduleEquipment = false;
 var moduleStorage = true;
 var moduleHouse = false;
-var moduleMapForEquipment = true;
+var moduleMapForEquipment = false;
 
 // STORAGE SETTINGS
 var buyStorageThreshold = 0.99;
@@ -18,7 +18,7 @@ var scientistRatio = 0; // for 1 farmer
 var baseJobThreshold = 5; // workers lept unumployed for high level jobs (trainer...)
 
 // UPGRADE SETTINGS
-var buyShieldblock = true;
+var buyShieldblock = false;
 
 // EQUPMENT SETTINGS
 var buySupershield = false;
@@ -46,6 +46,7 @@ if (buyShieldblock)
 var equipmentList = ['Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'Harmbalest', 'GambesOP', 'Gymystic'];
 if (buySupershield)
     equipmentList.push('Supershield');
+var location;
 
 // Create Trimp-o-Matic button
 var ToMbutton = document.createElement("input");
@@ -60,10 +61,32 @@ var testButton = document.createElement("input");
 testButton.type = "button";
 testButton.value = "Test";
 testButton.onclick = test;
-testButton.setAttribute("style", "font-size: 12px; font-weight: normal; position: relative; float:left; top: 0px; left: 0px; background-color: #ee0000");
+testButton.setAttribute("style", "font-size: 12px; font-weight: normal; position: relative; float:left; top: 0px; left: 0px; background-color: #0000ee");
 document.getElementById("food").insertBefore(testButton, document.getElementById("food").firstChild);
 
+// Dialog box for ToM settings
+$("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
+$("body").append($("<div/>", {"id": "ToMsettings", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
+    $("<input>", {"type": "checkbox", "id": "storageCheck"}), $("<label/>", {"for": "storageCheck"}).append(" storage "),
+    $("<input>", {"type": "checkbox", "id": "housesCheck"}), $("<label/>", {"for": "housesCheck"}).append(" houses "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "jobsCheck"}), $("<label/>", {"for": "jobsCheck"}).append(" jobs "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "equipmentsCheck"}), $("<label/>", {"for": "equipmentsCheck"}).append(" equipments "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "upgradesCheck"}), $("<label/>", {"for": "upgradesCheck"}).append(" upgrades "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "mapForEquipmentCheck"}), $("<label/>", {"for": "mapForEquipmentCheck"}).append(" map for equipment "), $("<br>")
+]));
+
+$(function() {
+  $("#ToMsettings").dialog({
+    autoOpen: false, 
+    buttons: {OK: activateToM},
+    width: 200
+  });
+});
+
 function activateToM() {
+
+    $("#ToMsettings").dialog("open");
+
     if (!ToMactivated){
         debug("ToM activated");
         ToMinterval = setInterval(mainLoop, runInterval);
@@ -204,13 +227,77 @@ function mainLoop() {
         }
     }
 
-    // FARM MAP FOR EQUIPMENT
+    // MAP FOR EQUIPMENT
+    if (moduleMapForEquipment){
+        //get physical location: World or Maps
+        if (document.getElementById('mapsBtnText').contains('World'))
+            location = 'World';
+        else
+            location = 'Maps';
+
+        // run top level map to get upgades
+        if (location == 'World' && document.getElementById('mapBonus').innerHTML == ''){
+            debug('Create Map to get equipment upgrades')
+            createAndRunMap(9, 9, 9, 'Moutain', 0, 'Repeat for Items');
+        }
+
+        // detect upgrades are available and run -2 level map to farm for
+
+        // detect all upgrades purchase and return to world
+
+    }
 }
+
+function createAndRunMap(loot, size, diff, biome, level, repeatUntil){
+    // document.getElementById('mapsBtnText').innerHTML; // Maps / World
+    // mapsClicked(); // go to maps/world
+    // document.getElementById('repeatBtn').classList.contains('btn-success'); // Repeat Map status true/false
+    // repeatClicked(); // click on Repeat Map
+    // repeatUntil : "Repeat Forever", "Repeat to 10", "Repeat for Any", "Repeat for Items"
+    // toggleSetting('repeatUntil'); // change repeat option
+    // document.getElementById('toggleexitTo').classList.contains('settingBtn0'); // 0 to Maps, 1 to World
+    // toggleSetting('exitTo'); // change exit to option
+    // buyMap(), runMap(), recycleMap(), incrementMapLevel(-1), incrementMapLevel(1)
+
+    debug('Run ' + loot + '-' + size + '-' + diff + ' ' + biome + ' map with ' + repeatUntil);
+
+    // Go to maps menu
+    mapsClicked();
+
+    // Set repeat map On
+    if (!document.getElementById('repeatBtn').classList.contains('btn-success'))
+        repeatClicked();
+
+    // Create and run map to get equipement upgrades
+    // Set map slider to max value and biome to Moutnain, buy Map, run Map
+    document.getElementById('lootAdvMapsRange').value = loot; // 0-9
+    document.getElementById('sizeAdvMapsRange').value = size; // 0-9
+    document.getElementById('difficultyAdvMapsRange').value = diff; // 0-9
+    document.getElementById('biomeAdvMapsSelect').value = biome; // Random, Moutain, Forest, Sea, Depth
+    incrementMapLevel(level); // -N level from top level
+    recycleMap();
+    buyMap();
+    runMap();
+
+    // set repeat Item
+    if (!(document.getElementById('togglerepeatUntil').innerHTML == repeatUntil))
+        toggleSetting('repeatUntil');
+    if (!(document.getElementById('togglerepeatUntil').innerHTML == repeatUntil))
+        toggleSetting('repeatUntil');
+    if (!(document.getElementById('togglerepeatUntil').innerHTML == repeatUntil))
+        toggleSetting('repeatUntil');
+
+    //set Exit to World
+    if (document.getElementById('toggleexitTo').classList.contains('settingBtn0'))
+        toggleSetting('exitTo');
+}
+
 
 function debug(text){
     console.log(text);
 }
 
 function test(){
-    
+    debug('Test');
+
 }
