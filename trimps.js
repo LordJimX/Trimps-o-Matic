@@ -47,7 +47,7 @@ if (buyShieldblock)
 var equipmentList = ['Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'Harmbalest', 'GambesOP'];
 if (buySupershield)
     equipmentList.push('Supershield');
-var location, equipmentUpgradeAvailable;
+var battleLocation, equipmentUpgradeAvailable;
 
 // Create Trimp-o-Matic button
 var ToMbutton = document.createElement("input");
@@ -253,14 +253,14 @@ function mainLoop() {
 
     // MAP FOR EQUIPMENT
     if (moduleMapForEquipment){
-        //get physical location: World or Maps
+        //get physical battle location: World or Maps
         if (document.getElementById('mapsBtnText').innerHTML.includes('World'))
-            location = 'World';
+            battleLocation = 'World';
         else
-            location = 'Maps';
+            battleLocation = 'Maps';
 
         // run top level map to get upgades if no maps bonus
-        if (location == 'World' && document.getElementById('mapBonus').innerHTML == ''){
+        if (battleLocation == 'World' && document.getElementById('mapBonus').innerHTML == ''){
             debug('Create Map to get equipment upgrades');
             //createAndRunMap(9, 9, 9, 'Moutain', 0, 'Repeat for Items');
         }
@@ -273,13 +273,13 @@ function mainLoop() {
                 equipmentUpgradeAvailable = true;
             }
         }
-        if (location == 'World' && equipmentUpgradeAvailable){
+        if (battleLocation == 'World' && equipmentUpgradeAvailable){
             debug('Equipment upgrade available, create a map to farm');
             //createAndRunMap(9, 9, 9, 'Moutain', -3, 'Repeat Forever');
         }
 
         // detect all upgrades purchase and return to world
-        if (location == 'Maps' && !equipmentUpgradeAvailable){
+        if (battleLocation == 'Maps' && !equipmentUpgradeAvailable){
             debug('No more equipment upgrade available, go back to world');
             //repeatClicked();
         }
