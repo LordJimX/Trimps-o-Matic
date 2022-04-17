@@ -216,8 +216,8 @@ function mainLoop() {
         }
         else if (unumployed > Math.max(baseJobThreshold * maxEmployed, minBaseJobThreshold)){
             if (scientist / farmer < scientistRatio && scientist <= maxScientist){
-                buyJob("Scientific", true, true);
-                debug("Buy Scientific job");
+                buyJob("Scientist", true, true);
+                debug("Buy Scientist job");
             }
             else if (miner / farmer < minerRatio){
                 buyJob("Miner", true, true);
