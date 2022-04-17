@@ -402,7 +402,7 @@ $("body").append(
             $("<tr/>").append([
                 $("<td/>").append([
                     $("<input>", {"type": "checkbox", "id": "jobsCheckTest", "checked": moduleJob}),
-                    $("<label/>", {"for": "jobsCheckTest"}).append(" jobs "),
+                    $("<label/>", {"for": "jobsCheckTest"}).append(" jobs ")
                 ]),
                 $("<td/>").append([
 
@@ -411,7 +411,7 @@ $("body").append(
             $("<tr/>").append([
                 $("<td/>").append([
                     $("<input>", {"type": "checkbox", "id": "equipmentsCheckTest", "checked": moduleEquipment}),
-                    $("<label/>", {"for": "equipmentsCheckTest"}).append(" equipments "),
+                    $("<label/>", {"for": "equipmentsCheckTest"}).append(" equipments ")
                 ]),
                 $("<td/>").append([
 
@@ -420,7 +420,7 @@ $("body").append(
             $("<tr/>").append([
                 $("<td/>").append([
                     $("<input>", {"type": "checkbox", "id": "upgradesCheckTest", "checked": moduleUpgrade}),
-                    $("<label/>", {"for": "upgradesCheckTest"}).append(" upgrades "),
+                    $("<label/>", {"for": "upgradesCheckTest"}).append(" upgrades ")
                 ]),
                 $("<td/>").append([
 
@@ -429,7 +429,7 @@ $("body").append(
             $("<tr/>").append([
                 $("<td/>").append([
                     $("<input>", {"type": "checkbox", "id": "mapForEquipmentCheckTest", "checked": moduleMapForEquipment}),
-                    $("<label/>", {"for": "mapForEquipmentCheckTest"}).append(" map 4 eqpt "),
+                    $("<label/>", {"for": "mapForEquipmentCheckTest"}).append(" map 4 eqpt ")
                 ]),
                 $("<td/>").append([
 
