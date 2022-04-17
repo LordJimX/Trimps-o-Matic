@@ -260,7 +260,7 @@ function mainLoop() {
             battleLocation = 'Maps';
 
         // run top level map to get upgades if no maps bonus
-        if (battleLocation == 'World' && !document.getElementById('mapBonus').innerHTML){
+        if (battleLocation == 'World' && document.getElementById('mapBonus').textContent.trim() === ''){
             debug('Create Map to get equipment upgrades');
             //createAndRunMap(9, 9, 9, 'Moutain', 0, 'Repeat for Items');
         }
