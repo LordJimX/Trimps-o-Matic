@@ -198,7 +198,7 @@ function mainLoop() {
     if (!!document.getElementById("ScientistOwned"))
         scientist = parseInt(document.getElementById("ScientistOwned").innerHTML);
     if (!!document.getElementById("maxEmployed"))
-        scientist = parseInt(document.getElementById("maxEmployed").innerHTML);
+        maxEmployed = parseInt(document.getElementById("maxEmployed").innerHTML);
     
     if (moduleJob && notfiringMode && unumployed)
     {
