@@ -254,7 +254,7 @@ function mainLoop() {
     // MAP FOR EQUIPMENT
     if (moduleMapForEquipment){
         //get physical location: World or Maps
-        if (document.getElementById('mapsBtnText').contains('World'))
+        if (document.getElementById('mapsBtnText').innerHTML.contains('World'))
             location = 'World';
         else
             location = 'Maps';
