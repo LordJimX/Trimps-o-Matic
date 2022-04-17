@@ -364,7 +364,7 @@ function debug(text){
     console.log(text);
 }
 
-
+// TEST UI
 $("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
 $("body").append(
     $("<div/>", {"id": "ToMsettingsTest", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
@@ -390,8 +390,8 @@ $("body").append(
                 $("<br>")
             ]),
             $("<td/>").append([
-                $("<input>", {"id": "lumberInput"}),
-                $("<label/>", {"for": "lumberInput"}).append("Lumber"),
+                $("<label/>").append("Lumber"),
+                $("<input>", {"id": "lumberInput", "width": "20"}),
                 $("<br>")
             ]),
         ])
@@ -402,7 +402,7 @@ $(function() {
         autoOpen: false, 
         buttons: {'Ok': function(event){$("#ToMsettingsTest").dialog("close"); ToMsettingsOpened = false;},
             'Cancel': function(event){$("#ToMsettingsTest").dialog("close"); ToMsettingsOpened = false;}},
-        width: 300
+        width: 500
     });
 });
 
