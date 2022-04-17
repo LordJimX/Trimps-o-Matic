@@ -64,6 +64,13 @@ testButton.onclick = test;
 testButton.setAttribute("style", "font-size: 12px; font-weight: normal; position: relative; float:left; top: 0px; left: 0px; background-color: #0000ee");
 document.getElementById("food").insertBefore(testButton, document.getElementById("food").firstChild);
 
+var scriptJQ = document.createElement('script');
+scriptJQ.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+document.getElementsByTagName('head')[0].appendChild(scriptJQ);
+var scriptJQui = document.createElement('script');
+scriptJQui.src = 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js';
+document.getElementsByTagName('head')[0].appendChild(scriptJQui);
+
 // Dialog box for ToM settings
 $("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
 $("body").append($("<div/>", {"id": "ToMsettings", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
