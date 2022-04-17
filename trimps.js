@@ -41,13 +41,13 @@ var unumployed = 0;
 var notfiringMode, trainer, explorer, farmer, lumber, miner, scientist;
 var getTrainer, getExplorer;
 var equipment, upgrade;
-var upgradeList = ['Miners', 'Scientists', 'Coordination', 'Speedminer', 'Speedlumber', 'Speedfarming', 'Speedscience', 'Speedexplorer', 'Megaminer', 'Megalumber', 'Megafarming', 'Megascience', 'Efficiency', 'TrainTacular', 'Trainers', 'Explorers', 'Blockmaster', 'Battle', 'Bloodlust', 'Bounty', 'Egg', 'Anger', 'Formations', 'Dominance', 'Barrier', 'UberHut', 'UberHouse', 'UberMansion', 'UberHotel', 'UberResort', 'Trapstorm', 'Gigastation', 'Potency', 'Magmamancers'];
+var upgradeList = ['Miners', 'Scientists', 'Coordination', 'Speedminer', 'Speedlumber', 'Speedfarming', 'Speedscience', 'Speedexplorer', 'Megaminer', 'Megalumber', 'Megafarming', 'Megascience', 'Efficiency', 'TrainTacular', 'Trainers', 'Explorers', 'Blockmaster', 'Battle', 'Bloodlust', 'Bounty', 'Egg', 'Anger', 'Formations', 'Dominance', 'Barrier', 'UberHut', 'UberHouse', 'UberMansion', 'UberHotel', 'UberResort', 'Trapstorm', 'Gigastation', 'Potency', 'Magmamancers', 'Gymystic'];
 if (buyShieldblock)
     upgradeList.push('Shieldblock');
-var equipmentList = ['Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'Harmbalest', 'GambesOP', 'Gymystic'];
+var equipmentList = ['Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'Harmbalest', 'GambesOP'];
 if (buySupershield)
     equipmentList.push('Supershield');
-var location;
+var location, equipmentUpgradeAvailable;
 
 // Create Trimp-o-Matic button
 var ToMbutton = document.createElement("input");
@@ -68,12 +68,12 @@ document.getElementById("food").insertBefore(testButton, document.getElementById
 // Dialog box for ToM settings
 $("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
 $("body").append($("<div/>", {"id": "ToMsettings", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
-    $("<input>", {"type": "checkbox", "id": "storageCheck", "checked": moduleStorage}), $("<label/>", {"for": "storageCheck"}).append(" storage "), $("<br>"),
-    $("<input>", {"type": "checkbox", "id": "housesCheck"}), $("<label/>", {"for": "housesCheck"}).append(" houses "), $("<br>"),
-    $("<input>", {"type": "checkbox", "id": "jobsCheck"}), $("<label/>", {"for": "jobsCheck"}).append(" jobs "), $("<br>"),
-    $("<input>", {"type": "checkbox", "id": "equipmentsCheck"}), $("<label/>", {"for": "equipmentsCheck"}).append(" equipments "), $("<br>"),
-    $("<input>", {"type": "checkbox", "id": "upgradesCheck"}), $("<label/>", {"for": "upgradesCheck"}).append(" upgrades "), $("<br>"),
-    $("<input>", {"type": "checkbox", "id": "mapForEquipmentCheck"}), $("<label/>", {"for": "mapForEquipmentCheck"}).append(" map for equipment "), $("<br>")
+    $("<input>", {"type": "checkbox", "id": "storagesCheck", "checked": moduleStorage}), $("<label/>", {"for": "storagesCheck"}).append(" storage "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "housesCheck", "checked": moduleHouse}), $("<label/>", {"for": "housesCheck"}).append(" houses "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "jobsCheck", "checked": moduleJob}), $("<label/>", {"for": "jobsCheck"}).append(" jobs "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "equipmentsCheck", "checked": moduleEquipment}), $("<label/>", {"for": "equipmentsCheck"}).append(" equipments "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "upgradesCheck", "checked": moduleUpgrade}), $("<label/>", {"for": "upgradesCheck"}).append(" upgrades "), $("<br>"),
+    $("<input>", {"type": "checkbox", "id": "mapForEquipmentCheck", "checked": moduleMapForEquipment}), $("<label/>", {"for": "mapForEquipmentCheck"}).append(" map for equipment "), $("<br>")
 ]));
 
 $(function() {
@@ -94,7 +94,25 @@ function activateToM() {
     else if (!ToMactivated && ToMsettingsOpened){
         $("#ToMsettings").dialog("close");
         ToMsettingsOpened = false;
+        moduleJob = document.getElementById('jobsCheck').checked;
+        moduleUpgrade = document.getElementById('upgradesCheck').checked;
+        moduleEquipment = document.getElementById('equipmentsCheck').checked;
+        moduleStorage = document.getElementById('stroagesCheck').checked;
+        moduleHouse = document.getElementById('housesCheck').checked;
+        moduleMapForEquipment = document.getElementById('mapForEquipmentCheck').checked;
         debug("ToM activated");
+        if (moduleJob)
+            debug('--> Module jobs activated');
+        if (moduleUpgrade)
+            debug('--> Module upgrades activated');
+        if (moduleEquipment)
+            debug('--> Module equipments activated');
+        if (moduleStorage)
+            debug('--> Module storages activated');
+        if (moduleHouse)
+            debug('--> Module houses activated');
+        if (moduleMapForEquipment)
+            debug('--> Module mapForEquipment activated');
         ToMinterval = setInterval(mainLoop, runInterval);
         ToMactivated = true;
         ToMbutton.setAttribute("style", "font-size: 12px; font-weight: normal; position: relative; float:left; top: 0px; left: 0px; background-color: #00ee00");
@@ -241,16 +259,30 @@ function mainLoop() {
         else
             location = 'Maps';
 
-        // run top level map to get upgades
+        // run top level map to get upgades if no maps bonus
         if (location == 'World' && document.getElementById('mapBonus').innerHTML == ''){
-            debug('Create Map to get equipment upgrades')
+            debug('Create Map to get equipment upgrades');
             createAndRunMap(9, 9, 9, 'Moutain', 0, 'Repeat for Items');
         }
 
-        // detect upgrades are available and run -2 level map to farm for
+        // detect if in world and upgrades are available. Then run -2 level map to farm for.
+        equipmentUpgradeAvailable = false;
+        for (var equipment in equipmentList) {
+            equipment = equipmentList[equipment];
+            if (!!document.getElementById(equipment)){
+                equipmentUpgradeAvailable = true;
+            }
+        }
+        if (location == 'World' && equipmentUpgradeAvailable){
+            debug('Equipment upgrade available, create a map to farm');
+            createAndRunMap(9, 9, 9, 'Moutain', -2, 'Repeat Forever');
+        }
 
         // detect all upgrades purchase and return to world
-
+        if (location == 'Maps' && !equipmentUpgradeAvailable){
+            debug('No more equipment upgrade available, go back to world');
+            repeatClicked();
+        }
     }
 }
 
