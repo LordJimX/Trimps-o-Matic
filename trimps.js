@@ -27,6 +27,7 @@ debug("Trimp-o-matic started");
 
 var runInterval = 1000; //main loop interval
 var ToMactivated = false;
+var ToMsettingsOpened = false;
 var ToMinterval;
 
 var foodOwned = 0;
@@ -67,7 +68,7 @@ document.getElementById("food").insertBefore(testButton, document.getElementById
 // Dialog box for ToM settings
 $("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
 $("body").append($("<div/>", {"id": "ToMsettings", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
-    $("<input>", {"type": "checkbox", "id": "storageCheck"}), $("<label/>", {"for": "storageCheck"}).append(" storage "),
+    $("<input>", {"type": "checkbox", "id": "storageCheck"}), $("<label/>", {"for": "storageCheck"}).append(" storage "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "housesCheck"}), $("<label/>", {"for": "housesCheck"}).append(" houses "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "jobsCheck"}), $("<label/>", {"for": "jobsCheck"}).append(" jobs "), $("<br>"),
     $("<input>", {"type": "checkbox", "id": "equipmentsCheck"}), $("<label/>", {"for": "equipmentsCheck"}).append(" equipments "), $("<br>"),
@@ -79,13 +80,19 @@ $(function() {
   $("#ToMsettings").dialog({
     autoOpen: false, 
     buttons: {OK: activateToM},
-    width: 200
+    width: 300
   });
 });
 
 function activateToM() {
 
-    if (!ToMactivated){
+    if (!ToMactivated && !ToMsettingsOpened){
+        $("#ToMsettings").dialog("open");
+        ToMsettingsOpened = true;
+    }
+    else if (!ToMactivated && ToMsettingsOpened){
+        $("#ToMsettings").dialog("close");
+        ToMsettingsOpened = false;
         debug("ToM activated");
         ToMinterval = setInterval(mainLoop, runInterval);
         ToMactivated = true;
@@ -297,6 +304,6 @@ function debug(text){
 
 function test(){
     debug('Test');
-    $("#ToMsettings").dialog("open");
+    
 
 }
