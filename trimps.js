@@ -275,7 +275,7 @@ function mainLoop() {
         }
         if (location == 'World' && equipmentUpgradeAvailable){
             debug('Equipment upgrade available, create a map to farm');
-            createAndRunMap(9, 9, 9, 'Moutain', -2, 'Repeat Forever');
+            createAndRunMap(9, 9, 9, 'Moutain', -3, 'Repeat Forever');
         }
 
         // detect all upgrades purchase and return to world
