@@ -7,15 +7,17 @@ var moduleHouse = false;
 var moduleMapForEquipment = false;
 
 // STORAGE SETTINGS
-var buyStorageThreshold = 0.99;
+var buyStorageThreshold = 0.9;
 
 // JOB SETTINGS
-var trainerBuyThreshold = 0.1; // cost of trainer / owned food
-var explorerBuyThreshold = 0.1; // cost of explorer / owned food
+var trainerBuyThreshold = 0.2; // cost of trainer / owned food
+var explorerBuyThreshold = 0.2; // cost of explorer / owned food
 var lumberRatio = 1; // for 1 farmer
 var minerRatio = 1.3; // for 1 farmer
-var scientistRatio = 0; // for 1 farmer
-var baseJobThreshold = 5; // workers lept unumployed for high level jobs (trainer...)
+var scientistRatio = 0.7; // for 1 farmer
+var maxScientist = 200; // max scientist to buy
+var baseJobThreshold = 0.01; // workers kept unumployed for high level jobs. Rate of total umployed
+var minBaseJobThreshold = 3; // workers kept unumployed for high level jobs at minimum (if above lower)
 
 // UPGRADE SETTINGS
 var buyShieldblock = false;
@@ -33,12 +35,23 @@ var ToMinterval;
 var foodOwned = 0;
 var woodOwned = 0;
 var metalOwned = 0;
+var fragmentsOwned = 0;
+var gemsOwned = 0;
+var scienceOwned = 0;
+var heliumOwned = 0;
 var foodMax = 1;
 var woodMax = 1;
 var metalMax = 1;
 var hut, house, mansion, hotel;
 var unumployed = 0;
-var notfiringMode, trainer, explorer, farmer, lumber, miner, scientist;
+var notfiringMode;
+var trainer = 0;
+var explorer = 0;
+var farmer = 0;
+var lumber = 0;
+var miner = 0;
+var scientist = 0;
+var maxEmployed = 0;
 var getTrainer, getExplorer;
 var equipment, upgrade;
 var upgradeList = ['Miners', 'Scientists', 'Coordination', 'Speedminer', 'Speedlumber', 'Speedfarming', 'Speedscience', 'Speedexplorer', 'Megaminer', 'Megalumber', 'Megafarming', 'Megascience', 'Efficiency', 'TrainTacular', 'Trainers', 'Explorers', 'Blockmaster', 'Battle', 'Bloodlust', 'Bounty', 'Egg', 'Anger', 'Formations', 'Dominance', 'Barrier', 'UberHut', 'UberHouse', 'UberMansion', 'UberHotel', 'UberResort', 'Trapstorm', 'Gigastation', 'Potency', 'Magmamancers', 'Gymystic'];
@@ -127,22 +140,9 @@ function activateToM() {
 }
 
 function mainLoop() {
-
-    // RESSOURCES
-    if (!!document.getElementById('foodOwned')){
-        foodOwned = parseFloat(document.getElementById('foodOwned').innerHTML);
-        foodMax = parseFloat(document.getElementById('foodMax').innerHTML);
-    }
-    if (!!document.getElementById('woodOwned')){
-        woodOwned = parseFloat(document.getElementById('woodOwned').innerHTML);
-        woodMax = parseFloat(document.getElementById('woodMax').innerHTML);
-    }
-    if (!!document.getElementById('metalOwned')){
-        metalOwned = parseFloat(document.getElementById('metalOwned').innerHTML);
-        metalMax = parseFloat(document.getElementById('metalMax').innerHTML);
-    }
     
     // STORAGES
+    getRessources();
     if (foodOwned / foodMax > buyStorageThreshold && moduleStorage){
         debug('Buy Barn');
         buyBuilding('Barn', true, true);
@@ -157,6 +157,7 @@ function mainLoop() {
     }
 
     // HOUSES
+    getRessources();
     if (!!document.getElementById('HutOwned'))
         hut = parseInt(document.getElementById('HutOwned').innerHTML);
     if (!!document.getElementById('HouseOwned'))
@@ -180,6 +181,7 @@ function mainLoop() {
     }
 
     // JOBS
+    getRessources();
     notfiringMode = document.getElementById("fireBtn").classList.contains("fireBtnNotFiring");
     if (!!document.getElementById("jobsTitleUnemployed"))
         unumployed = parseInt(document.getElementById("jobsTitleUnemployed").innerHTML);
@@ -195,11 +197,14 @@ function mainLoop() {
         miner = parseInt(document.getElementById("MinerOwned").innerHTML);
     if (!!document.getElementById("ScientistOwned"))
         scientist = parseInt(document.getElementById("ScientistOwned").innerHTML);
+    if (!!document.getElementById("maxEmployed"))
+        scientist = parseInt(document.getElementById("maxEmployed").innerHTML);
+    
     if (moduleJob && notfiringMode && unumployed)
     {
-        getTrainer = !!document.getElementById("Trainer") && document.getElementById("Trainer").classList.contains('thingColorCanAfford');
+        getTrainer = !!document.getElementById("Trainer");
         getTrainer = getTrainer && (750 * Math.pow(1.1, trainer) < trainerBuyThreshold * foodOwned);
-        getExplorer = !!document.getElementById("Explorer") && document.getElementById("Explorer").classList.contains('thingColorCanAfford');
+        getExplorer = !!document.getElementById("Explorer");
         getExplorer = getExplorer && (15000 * Math.pow(1.1, explorer) < explorerBuyThreshold * foodOwned);
         if (getTrainer) {
             buyJob("Trainer", true, true);
@@ -209,8 +214,8 @@ function mainLoop() {
             buyJob("Explorer", true, true);
             debug("Buy Explorer job");
         }
-        else if (unumployed > baseJobThreshold){
-            if (scientist / farmer < scientistRatio){
+        else if (unumployed > Math.max(baseJobThreshold * maxEmployed, minBaseJobThreshold)){
+            if (scientist / farmer < scientistRatio && scientist <= maxScientist){
                 buyJob("Scientific", true, true);
                 debug("Buy Scientific job");
             }
@@ -252,6 +257,7 @@ function mainLoop() {
     }
 
     // MAP FOR EQUIPMENT
+    getRessources();
     if (moduleMapForEquipment){
         //get physical battle location: World or Maps
         if (document.getElementById('worldName').textContent.includes('Zone'))
@@ -328,6 +334,30 @@ function createAndRunMap(loot, size, diff, biome, level, repeatUntil){
     //set Exit to World
     if (document.getElementById('toggleexitTo').classList.contains('settingBtn0'))
         toggleSetting('exitTo');
+}
+
+function getRessources(){
+    // RESSOURCES
+    if (!!document.getElementById('foodOwned')){
+        foodOwned = parseFloat(document.getElementById('foodOwned').innerHTML);
+        foodMax = parseFloat(document.getElementById('foodMax').innerHTML);
+    }
+    if (!!document.getElementById('woodOwned')){
+        woodOwned = parseFloat(document.getElementById('woodOwned').innerHTML);
+        woodMax = parseFloat(document.getElementById('woodMax').innerHTML);
+    }
+    if (!!document.getElementById('metalOwned')){
+        metalOwned = parseFloat(document.getElementById('metalOwned').innerHTML);
+        metalMax = parseFloat(document.getElementById('metalMax').innerHTML);
+    }
+    if (!!document.getElementById('scienceOwned'))
+        scienceOwned = parseFloat(document.getElementById('scienceOwned').innerHTML);
+    if (!!document.getElementById('scienceOwned'))
+        fragmentsOwned = parseFloat(document.getElementById('fragmentsOwned').innerHTML);
+    if (!!document.getElementById('gemsOwned'))
+        gemsOwned = parseFloat(document.getElementById('gemsOwned').innerHTML);
+    if (!!document.getElementById('heliumOwned'))
+        heliumOwned = parseFloat(document.getElementById('heliumOwned').innerHTML);
 }
 
 
