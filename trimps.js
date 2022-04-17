@@ -395,7 +395,7 @@ $("body").append(
                 $("<br>"),
                 $("<label/>").append("Farm/Lumber/Miner/Scientist "),
                 $("<input>", {"id": "farmInput", "width": "20", "value": "1"}),
-                $("<input>", {"id": "lumberInput", "width": "20", "value", lumberRatio}),
+                $("<input>", {"id": "lumberInput", "width": "20", "value": lumberRatio}),
                 $("<br>")
             ]),
         ])
