@@ -36,6 +36,7 @@ var ToMactivated = false;
 var ToMsettingsOpened = false;
 var ToMinterval;
 
+var ToMbutton, testButton;
 var foodOwned, woodOwned, metalOwned, fragmentsOwned, gemsOwned, scienceOwned, heliumOwned;
 var foodMax, woodMax, metalMax;
 var hut, house, mansion, hotel, resort, gym, tribute, nursery;
@@ -323,7 +324,7 @@ function getJobs(){
 
 function createUI(){
     // Create Trimp-o-Matic button
-    var ToMbutton = document.createElement("input");
+    ToMbutton = document.createElement("input");
     ToMbutton.type = "button";
     ToMbutton.value = "ToM";
     ToMbutton.onclick = activateToM;
@@ -331,7 +332,7 @@ function createUI(){
     document.getElementById("food").insertBefore(ToMbutton, document.getElementById("food").firstChild);
 
     // Create Test button
-    var testButton = document.createElement("input");
+    testButton = document.createElement("input");
     testButton.type = "button";
     testButton.value = "Test";
     testButton.onclick = test;
