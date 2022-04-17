@@ -2,7 +2,7 @@ $("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-ligh
 $("body").append(
     $("<div/>", {"id": "ToMsettingsTest", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
         $("<table/>").append([
-            $("<tr/>").append([
+            $("<td/>").append([
                 $("<input>", {"type": "checkbox", "id": "storagesCheckTest", "checked": moduleStorage}),
                 $("<label/>", {"for": "storagesCheckTest"}).append(" storage "),
                 $("<br>"),
@@ -22,7 +22,7 @@ $("body").append(
                 $("<label/>", {"for": "mapForEquipmentCheckTest"}).append(" map for equipment "),
                 $("<br>")
             ]),
-            $("<tr/>").append([
+            $("<td/>").append([
                 $("<input>", {"id": "lumberInput"}),
                 $("<label/>", {"for": "lumberInput"}).append("Lumber"),
                 $("<br>")
