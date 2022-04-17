@@ -72,7 +72,7 @@ scriptJQui.src = 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js';
 document.getElementsByTagName('head')[0].appendChild(scriptJQui);
 
 // Dialog box for ToM settings
-$("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
+//$("head").append("<link href = 'https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css' rel = 'stylesheet'>");
 $("body").append($("<div/>", {"id": "ToMsettings", "title": "ToM settings", "style": "font: 12pt Courier New"}).append([
     $("<input>", {"type": "checkbox", "id": "storageCheck"}), $("<label/>", {"for": "storageCheck"}).append(" storage "),
     $("<input>", {"type": "checkbox", "id": "housesCheck"}), $("<label/>", {"for": "housesCheck"}).append(" houses "), $("<br>"),
@@ -91,8 +91,6 @@ $(function() {
 });
 
 function activateToM() {
-
-    $("#ToMsettings").dialog("open");
 
     if (!ToMactivated){
         debug("ToM activated");
@@ -306,5 +304,6 @@ function debug(text){
 
 function test(){
     debug('Test');
+    $("#ToMsettings").dialog("open");
 
 }
