@@ -127,7 +127,7 @@ function mainLoop() {
         }
 
         getTribute = !!document.getElementById("Tribute") && (10000 * Math.pow(1.05, tribute) < tributeBuyThreshold * foodOwned);
-        if (getTribute && document.getElementById("Tribute").classList.contains('thingColorCanAfford'){
+        if (getTribute && document.getElementById("Tribute").classList.contains('thingColorCanAfford')){
             debug('Buy Tribute structure');
             buyBuilding('Tribute', true, true);
         }
