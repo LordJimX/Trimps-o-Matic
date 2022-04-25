@@ -1,13 +1,13 @@
 // MODULES
-var moduleJob = true;
+var moduleJob = false;
 var moduleUpgrade = true;
-var moduleEquipment = true;
+var moduleEquipment = false;
 var moduleStorage = true;
-var moduleStructure = true;
+var moduleStructure = false;
 var moduleMapForEquipment = false;
 
 // STORAGE SETTINGS
-var buyStorageThreshold = 0.9;
+var buyStorageThreshold = 0.75;
 
 // STRUCTURE SETTINGS
 var gymBuyThreshold = 0.05; // cost of gym / owned wood
