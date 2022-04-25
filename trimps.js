@@ -3,15 +3,15 @@ var moduleJob = false;
 var moduleUpgrade = true;
 var moduleEquipment = false;
 var moduleStorage = true;
-var moduleStructure = false;
+var moduleStructure = true;
 var moduleMapForEquipment = false;
 
 // STORAGE SETTINGS
 var buyStorageThreshold = 0.75;
 
 // STRUCTURE SETTINGS
-var gymBuyThreshold = 0.05; // cost of gym / owned wood
-var tributeBuyThreshold = 0.1; // cost of tribute / owned food
+var gymBuyThreshold = 0.8; // cost of gym / owned wood
+var tributeBuyThreshold = 0.8; // cost of tribute / owned food
 
 // JOB SETTINGS
 var trainerBuyThreshold = 0.2; // cost of trainer / owned food
@@ -119,30 +119,19 @@ function mainLoop() {
         getRessources();
         getStructures();
         
+        // thingColorCanAfford
         getGym = !!document.getElementById("Gym") && (400 * Math.pow(1.185, gym) < gymBuyThreshold * woodOwned);
-        if (getGym){
+        if (getGym && document.getElementById("Gym").classList.contains('thingColorCanAfford')){
             debug('Buy Gym structure');
             buyBuilding('Gym', true, true);
         }
 
         getTribute = !!document.getElementById("Tribute") && (10000 * Math.pow(1.05, tribute) < tributeBuyThreshold * foodOwned);
-        if (getTribute){
+        if (getTribute && document.getElementById("Tribute").classList.contains('thingColorCanAfford'){
             debug('Buy Tribute structure');
             buyBuilding('Tribute', true, true);
         }
 
-        if (!!document.getElementById("Hotel") && moduleStructure){
-            
-        }
-        else if (!!document.getElementById("Mansion" && moduleStructure)){
-            
-        }
-        else if (!!document.getElementById("House" && moduleStructure)){
-            
-        }
-        else {
-            
-        }
     }
 
     // JOBS
