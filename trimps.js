@@ -7,7 +7,7 @@ var moduleStructure = true;
 var moduleMapForEquipment = false;
 
 // STORAGE SETTINGS
-var buyStorageThreshold = 0.75;
+var buyStorageThreshold = 0.95;
 
 // STRUCTURE SETTINGS
 var gymBuyThreshold = 0.8; // cost of gym / owned wood
