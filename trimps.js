@@ -1,8 +1,8 @@
 // MODULES
 var moduleJob = false;
-var moduleUpgrade = true;
+var moduleUpgrade = false;
 var moduleEquipment = false;
-var moduleStorage = true;
+var moduleStorage = false;
 var moduleStructure = true;
 var moduleMapForEquipment = false;
 
@@ -10,8 +10,8 @@ var moduleMapForEquipment = false;
 var buyStorageThreshold = 0.95;
 
 // STRUCTURE SETTINGS
-var gymBuyThreshold = 0.8; // cost of gym / owned wood
-var tributeBuyThreshold = 0.8; // cost of tribute / owned food
+var gymBuyThreshold = 0.9; // cost of gym / owned wood
+var tributeBuyThreshold = 0.9; // cost of tribute / owned food
 
 // JOB SETTINGS
 var trainerBuyThreshold = 0.2; // cost of trainer / owned food
